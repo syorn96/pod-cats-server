@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const db = require('../../models')
 
-// GET /pokemoncards
+// GET /cats
     router.get('/', async (req,res)=> {
         try{
             const allCats = await db.Cat.find({})
