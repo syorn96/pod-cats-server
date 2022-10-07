@@ -34,7 +34,7 @@ app.get('/', authLockedRoute, (req, res) => {
 //  controllers
 //  prefixing the routes with a semantic version
 app.use('/api-v1/users', require('./controllers/api-v1/users.js'))
-
+app.use('/api-v1/cats', require('./controllers/api-v1/cats.js'))
 // hey listen
 app.listen(PORT, () => {
   rowdyResults.print()
