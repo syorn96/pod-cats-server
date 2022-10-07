@@ -20,6 +20,8 @@ db.on('error',  err => {
 
 
 module.exports = {
-  User: require('./User')
+  User: require('./User'),
+  Comment: require('./Comment'),
+  Cat: require('./Cat')
   //additional db models
 }
