@@ -35,6 +35,9 @@ router.get('/id/:id', async (req,res)=> {
 router.post('/new', async (req,res)=> {
     try{
         const newCat = await db.Cat.create(req.body)
+        // console.log(res.locals._id)
+        const foundUser = await db.User.findById(res.locals._id)
+        newCat.user.push(foundUser)
         res.status(201).json(newCat)
 
     }catch(err){
