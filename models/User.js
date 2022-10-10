@@ -11,9 +11,10 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String
   },
-  cats: {
-    type: Array
-  },
+  cats: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Cat'
+  }],
 }, {
   timestamps: true
 })

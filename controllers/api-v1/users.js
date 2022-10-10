@@ -9,10 +9,10 @@ const authLockedRoute = require('./authLockedRoute')
 // GET /users - test endpoint
 router.get('/', async (req, res) => {
   try{
-    console.log(res.locals)
-    // const findUsers = await db.User.findOne({_id: res.locals})
-    // res.json(findUsers)
-    res.json({ msg: 'welcome to the users endpoint' })
+    console.log(res.locals.user)
+    const findUsers = await db.User.find({})
+    res.json(findUsers)
+    // res.json({ msg: 'welcome to the users endpoint' })
   }catch(err){
     console.log(err)
   }
@@ -47,7 +47,8 @@ router.post('/register', async (req, res) => {
     const payload = {
       name: newUser.name,
       email: newUser.email, 
-      id: newUser.id
+      id: newUser.id,
+      cats: []
     }
 
     // sign jwt and send back
@@ -66,7 +67,7 @@ router.post('/login', async (req, res) => {
     // try to find user in the db
     const foundUser = await db.User.findOne({
       email: req.body.email
-    })
+    }).populate('cats')
 
     const noLoginMessage = 'Incorrect username or password'
 
@@ -83,7 +84,8 @@ router.post('/login', async (req, res) => {
     const payload = {
       name: foundUser.name,
       email: foundUser.email, 
-      id: foundUser.id
+      id: foundUser.id,
+      cats: foundUser.cats
     }
 
     // sign jwt and send back
