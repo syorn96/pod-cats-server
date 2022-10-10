@@ -43,9 +43,9 @@ router.post('/new', async (req,res)=> {
 
 
 
-        //------NEW STUFF (Doesnt work yet)-------
+        // ------NEW STUFF (Doesnt work yet)-------
         // let foundUser = await db.User.findById(req.body.userId)
-        // // db.User.update({ "cats" : "test"}, {$push: {achieve"": 95 }})
+        // db.User.update({ "cats" : "test"}, {$push: {"achieve": 95 }})
         // db.User.updateOne({
         //     _id: req.body.userId
         // }, {
@@ -65,10 +65,10 @@ router.post('/new', async (req,res)=> {
 
         //How do we save the req.body.id to the cats[] field in the Users table?????? 
 
-
-
-        // await foundUser.cats.push(req.id)
-
+        
+        await foundUser.cats.push(req.body.id)
+        console.log('foundUser.cats:', foundUser.cats);
+        await foundUser.save()
     
 
 
