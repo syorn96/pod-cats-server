@@ -34,11 +34,43 @@ router.get('/id/:id', async (req,res)=> {
 // POST /cats
 router.post('/new', async (req,res)=> {
     try{
-        const newCat = await db.Cat.create(req.body)
-        // console.log(res.locals._id)
-        const foundUser = await db.User.findById(res.locals._id)
-        newCat.user.push(foundUser)
-        res.status(201).json(newCat)
+
+        //--------OLD STUFF-------
+        // const newCat = await db.Cat.create(req.body)
+        // const foundUser = await db.User.findById(res.locals._id)
+        // newCat.user.push(foundUser)
+        // res.status(201).json(newCat)
+
+
+
+        //------NEW STUFF (Doesnt work yet)-------
+        // let foundUser = await db.User.findById(req.body.userId)
+        // // db.User.update({ "cats" : "test"}, {$push: {achieve"": 95 }})
+        // db.User.updateOne({
+        //     _id: req.body.userId
+        // }, {
+        //     $set: {
+        //         cats: req.id
+        //     }
+        // })
+
+        // db.User.save()
+
+        //Information sent from the front end
+        console.log(req.body)
+
+        //The user that clicked "Add to profile"
+        let foundUser = await db.User.findById(req.body.userId)
+        console.log(foundUser)
+
+        //How do we save the req.body.id to the cats[] field in the Users table?????? 
+
+
+
+        // await foundUser.cats.push(req.id)
+
+    
+
 
     }catch(err){
         console.log(err)
