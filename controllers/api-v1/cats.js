@@ -5,7 +5,7 @@ const db = require('../../models')
 // GET /cats
     router.get('/', async (req,res)=> {
         try{
-            const allCats = await db.Cat.find({})
+            const allCats = await db.Cat.find({user})
             res.json(allCats)
         }catch(err){
             console.log(err)
@@ -38,7 +38,7 @@ router.post('/new', async (req,res)=> {
         //--------OLD STUFF-------
         const newCat = await db.Cat.create({
             header: req.body.header,
-            img_url: req.body.img_Url,
+            img_Url: req.body.img_Url,
             content: req.body.content,
             catId: req.body.catId})
         const foundUser = await db.User.findById(req.body.userId)
