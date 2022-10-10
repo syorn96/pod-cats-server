@@ -7,8 +7,15 @@ const authLockedRoute = require('./authLockedRoute')
 
 
 // GET /users - test endpoint
-router.get('/', (req, res) => {
-  res.json({ msg: 'welcome to the users endpoint' })
+router.get('/', async (req, res) => {
+  try{
+    console.log(res.locals)
+    // const findUsers = await db.User.findOne({_id: res.locals})
+    // res.json(findUsers)
+    res.json({ msg: 'welcome to the users endpoint' })
+  }catch(err){
+    console.log(err)
+  }
 })
 
 // POST /users/register - CREATE new user
