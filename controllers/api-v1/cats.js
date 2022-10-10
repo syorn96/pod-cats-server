@@ -57,7 +57,7 @@ router.post('/new', async (req,res)=> {
         // db.User.save()
 
         //Information sent from the front end
-        console.log(req.body)
+        console.log('from front end', req.body)
 
         //The user that clicked "Add to profile"
         let foundUser = await db.User.findById(req.body.userId)
