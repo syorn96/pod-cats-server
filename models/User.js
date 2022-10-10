@@ -10,7 +10,10 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String
-  }
+  },
+  cats: {
+    type: Array
+  },
 }, {
   timestamps: true
 })
