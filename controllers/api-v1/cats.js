@@ -39,7 +39,8 @@ router.post('/new', async (req,res)=> {
         const newCat = await db.Cat.create({
             header: req.body.header,
             img_url: req.body.img_Url,
-            content: req.body.content})
+            content: req.body.content,
+            catId: req.body.catId})
         const foundUser = await db.User.findById(req.body.userId)
             newCat.user.push(foundUser)
         // res.status(201).json(newCat)
