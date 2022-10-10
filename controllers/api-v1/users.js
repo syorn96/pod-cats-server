@@ -9,10 +9,10 @@ const authLockedRoute = require('./authLockedRoute')
 // GET /users - test endpoint
 router.get('/', async (req, res) => {
   try{
-    console.log(res.locals.user)
-    const findUsers = await db.User.find({})
-    res.json(findUsers)
-    // res.json({ msg: 'welcome to the users endpoint' })
+    // console.log(res.locals.user)
+    // const findUsers = await db.User.find({})
+    // res.json(findUsers)
+    res.json({ msg: 'welcome to the users endpoint' })
   }catch(err){
     console.log(err)
   }
