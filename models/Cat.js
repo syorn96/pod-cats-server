@@ -5,7 +5,7 @@ const CatSchema = new mongoose.Schema({
   catId: {
     type: String
   },
-  url: {
+  img_Url: {
     type: String
   },
   content: {
