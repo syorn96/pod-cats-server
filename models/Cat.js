@@ -2,10 +2,10 @@
 const mongoose = require('mongoose')
 
 const CatSchema = new mongoose.Schema({
-  header: {
+  catId: {
     type: String
   },
-  img_Url: {
+  url: {
     type: String
   },
   content: {

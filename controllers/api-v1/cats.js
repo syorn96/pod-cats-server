@@ -67,8 +67,8 @@ router.post('/new', async (req,res)=> {
         // console.log('from front end', req.body)
 
         //The user that clicked "Add to profile"
-        // let foundUser = await db.User.findById(req.body.userId)
-        // console.log(foundUser)
+        let foundUser = await db.User.findById(req.body.userId)
+        console.log(foundUser)
 
         //How do we save the req.body.id to the cats[] field in the Users table?????? 
 
@@ -78,6 +78,11 @@ router.post('/new', async (req,res)=> {
         //     id: req.body.id,
         //     url: req.body.url
         // })
+        // await foundUser.cats.push(req.body.id)
+        await foundUser.cats.push({
+            catId: req.body.id,
+            url: req.body.url
+        })
         console.log('foundUser.cats:', foundUser.cats);
         await foundUser.save()
     
