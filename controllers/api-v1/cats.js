@@ -36,11 +36,18 @@ router.post('/new', async (req,res)=> {
     try{
 
         //--------OLD STUFF-------
-        // const newCat = await db.Cat.create(req.body)
-        // const foundUser = await db.User.findById(res.locals._id)
-        // newCat.user.push(foundUser)
+        const newCat = await db.Cat.create({
+            header: req.body.header,
+            img_url: req.body.img_Url,
+            content: req.body.content})
+        const foundUser = await db.User.findById(req.body.userId)
+            newCat.user.push(foundUser)
         // res.status(201).json(newCat)
-
+            console.log(foundUser)
+            foundUser.cats.push(newCat)
+    
+            await foundUser.save()
+            await newCat.save()
 
 
         // ------NEW STUFF (Doesnt work yet)-------
@@ -57,7 +64,7 @@ router.post('/new', async (req,res)=> {
         // db.User.save()
 
         //Information sent from the front end
-        console.log('from front end', req.body)
+        // console.log('from front end', req.body)
 
         //The user that clicked "Add to profile"
         let foundUser = await db.User.findById(req.body.userId)
@@ -66,6 +73,11 @@ router.post('/new', async (req,res)=> {
         //How do we save the req.body.id to the cats[] field in the Users table?????? 
 
         
+
+        // await foundUser.cats.push({
+        //     id: req.body.id,
+        //     url: req.body.url
+        // })
         // await foundUser.cats.push(req.body.id)
         await foundUser.cats.push({
             catId: req.body.id,
