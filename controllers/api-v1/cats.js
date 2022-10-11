@@ -34,62 +34,20 @@ router.get('/id/:id', async (req,res)=> {
 // POST /cats
 router.post('/new', async (req,res)=> {
     try{
-
-        //--------OLD STUFF-------
         const newCat = await db.Cat.create({
             header: req.body.header,
             img_Url: req.body.img_Url,
             content: req.body.content,
-            catId: req.body.catId})
+            catId: req.body.catId
+        })
         const foundUser = await db.User.findById(req.body.userId)
-            newCat.user.push(foundUser)
-        // res.status(201).json(newCat)
-            console.log(foundUser)
-            foundUser.cats.push(newCat)
-    
-            await foundUser.save()
-            await newCat.save()
-
-
-        // ------NEW STUFF (Doesnt work yet)-------
-        // let foundUser = await db.User.findById(req.body.userId)
-        // db.User.update({ "cats" : "test"}, {$push: {"achieve": 95 }})
-        // db.User.updateOne({
-        //     _id: req.body.userId
-        // }, {
-        //     $set: {
-        //         cats: req.id
-        //     }
-        // })
-
-        // db.User.save()
-
-        //Information sent from the front end
-        // console.log('from front end', req.body)
-
-        //The user that clicked "Add to profile"
-        // let foundUser = await db.User.findById(req.body.userId)
-        // console.log(foundUser)
-
-        //How do we save the req.body.id to the cats[] field in the Users table?????? 
-
+        newCat.user.push(foundUser)
+        foundUser.cats.push(newCat)
         
-
-        // await foundUser.cats.push({
-        //     id: req.body.id,
-        //     url: req.body.url
-        // })
-        // await foundUser.cats.push(req.body.id)
-        // await foundUser.cats.push({
-        //     catId: req.body.id,
-        //     url: req.body.url
-        // })
-        console.log('foundUser.cats:', foundUser.cats);
-        // await foundUser.save()
-        res.status(201).json({ message: 'ye says hey' })
+        await foundUser.save()
+        await newCat.save()
         // can chain redirect with status
-        // res.redirect('/')
-
+        res.status(201).json({ message: 'ye says hey' })
     }catch(err){
         console.log(err)
         res.status(500).json({ message: 'Internal server error'})
