@@ -11,6 +11,9 @@ const CatSchema = new mongoose.Schema({
   content: {
     type: String
   },
+  header: {
+    type: String
+  },
   likes: {
     type: Number
   },

@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:userId', async (req, res) => {
   try{
-    const user = await db.User.find({_id: req.params.userId})
+    const user = await db.User.find({_id: req.params.userId}).populate('cats')
     res.json({ user: user})
   }catch(err){
 
@@ -108,6 +108,9 @@ router.post('/login', async (req, res) => {
   }
 })
 
+router.delete('/account', async (req,res)=> {
+  await db.User.findByIdAndDelete(req.body.id)
+})
 
 // GET /auth-locked - will redirect if bad jwt token is found
 router.get('/auth-locked', authLockedRoute, (req, res) => {
