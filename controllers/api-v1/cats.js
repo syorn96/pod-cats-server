@@ -5,7 +5,7 @@ const db = require('../../models')
 // GET /cats
     router.get('/', async (req,res)=> {
         try{
-            const allCats = await db.Cat.find({user})
+            const allCats = await db.Cat.find({})
             res.json(allCats)
         }catch(err){
             console.log(err)
@@ -85,9 +85,10 @@ router.post('/new', async (req,res)=> {
         //     url: req.body.url
         // })
         console.log('foundUser.cats:', foundUser.cats);
-        await foundUser.save()
-    
-
+        // await foundUser.save()
+        res.status(201).json({ message: 'ye says hey' })
+        // can chain redirect with status
+        // res.redirect('/')
 
     }catch(err){
         console.log(err)
