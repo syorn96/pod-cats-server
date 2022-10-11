@@ -3,6 +3,7 @@ const db = require('../../models')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+
 const authLockedRoute = require('./authLockedRoute')
 
 
@@ -10,11 +11,20 @@ const authLockedRoute = require('./authLockedRoute')
 router.get('/', async (req, res) => {
   try{
     // console.log(res.locals.user)
-    // const findUsers = await db.User.find({})
+    // const findUsers = await db.User.find({id: req.body.userId})
     // res.json(findUsers)
     res.json({ msg: 'welcome to the users endpoint' })
   }catch(err){
     console.log(err)
+  }
+})
+
+router.get('/:userId', async (req, res) => {
+  try{
+    const user = await db.User.find({_id: req.params.userId})
+    res.json({ user: user})
+  }catch(err){
+
   }
 })
 
