@@ -108,6 +108,50 @@ router.post('/login', async (req, res) => {
   }
 })
 
+// PUT /users/login -- validate login credentials
+router.put('/:id', async (req, res) => {
+  try {
+    // try to find user in the db
+    const foundUser = await db.User.findOne({
+      id: req.params.id
+    })
+
+    const noLoginMessage = 'Incorrect username or password'
+
+    // if the user is not found in the db, return and sent a status of 400 with a message
+    if(!foundUser) return res.status(400).json({ msg: noLoginMessage })
+    
+    // check the password from the req body against the password in the database
+    const matchPasswords = await bcrypt.compare(req.body.password, foundUser.password)
+    
+    // if provided password does not match, return an send a status of 400 with a message
+    if(!matchPasswords) return res.status(400).json({ msg: noLoginMessage })
+
+    const hashedPassword = bcrypt.hash(req.body.newPassword, 12)
+    const options = { new : true }
+    const editUser = await db.User.findByIdAndUpdate(req.params.id,{
+      name: req.body.name,
+      password: hashedPassword,
+      email: req.body.email
+    }, options)
+    // create jwt payload
+    const payload = {
+      name: editUser.name,
+      email: editUser.email, 
+      id: editUser.id,
+      cats: editUser.cats
+    }
+
+    // sign jwt and send back
+    const token = await jwt.sign(payload, process.env.JWT_SECRET)
+
+    res.json({ token })
+  } catch(error) {
+    console.log(error)
+    res.status(500).json({ msg: 'server error'  })
+  }
+})
+
 router.delete('/:id', async (req,res)=> {
   try{
     await db.User.findByIdAndDelete(req.params.id)
