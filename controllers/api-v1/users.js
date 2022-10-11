@@ -108,8 +108,14 @@ router.post('/login', async (req, res) => {
   }
 })
 
-router.delete('/account', async (req,res)=> {
-  await db.User.findByIdAndDelete(req.body.id)
+router.delete('/:id', async (req,res)=> {
+  try{
+    await db.User.findByIdAndDelete(req.params.id)
+    res.sendStatus(204)
+}catch(err){
+    console.log(err)
+    res.status(500).json({ message: 'Internal server error'})
+}
 })
 
 // GET /auth-locked - will redirect if bad jwt token is found
