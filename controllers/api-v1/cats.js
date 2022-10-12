@@ -6,7 +6,7 @@ const db = require('../../models')
 // GET /cats
     router.get('/', async (req,res)=> {
         try{
-            const allCats = await db.Cat.find({})
+            const allCats = await db.Cat.find({}).populate('user')
             res.json(allCats)
         }catch(err){
             console.log(err)
