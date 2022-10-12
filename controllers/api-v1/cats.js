@@ -1,4 +1,5 @@
 const express = require('express')
+const { isValidObjectId } = require('mongoose')
 const router = express.Router()
 const db = require('../../models')
 
@@ -90,10 +91,10 @@ router.put('/id/:id', async (req,res)=> {
     }
 })
 
-//DELETE /cats/id/:id
-router.delete('/id/:id', async (req,res)=> {
+//DELETE /cats/id/ (from user table)
+router.delete('/id', async (req,res)=> {
     try{
-        await db.Cat.findByIdAndDelete(req.params.id)
+        await db.User.updateOne({ _id: req.body.userId}, {$pull: { 'cats': req.body.id }})
         res.sendStatus(204)
     }catch(err){
         console.log(err)
@@ -101,3 +102,14 @@ router.delete('/id/:id', async (req,res)=> {
     }
 })
 module.exports = router
+
+//DELETE /cats/cat (from cat table)
+router.delete('/cat', async (req,res)=> {
+    try{
+        await db.Cat.findByIdAndDelete(req.body.id)
+        res.sendStatus(204)
+    }catch(err){
+        console.log(err)
+        res.status(500).json({ message: 'Internal server error'})
+    }
+})
