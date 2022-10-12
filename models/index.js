@@ -5,7 +5,7 @@ require('dotenv').config()
 const devDatabase = 'mernAuth' // update DB for authentication
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/' + devDatabase
 
-mongoose.connect(MONGODB_URI)
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
 
 const db = mongoose.connection
 
