@@ -111,29 +111,36 @@ router.post('/login', async (req, res) => {
 // PUT /users/login -- validate login credentials
 router.put('/:id', async (req, res) => {
   try {
+    
+    // console.log('hiiiiiiiii', req.params.id)
     // try to find user in the db
     const foundUser = await db.User.findOne({
-      id: req.params.id
+      _id: req.params.id
     })
-
+    console.log(foundUser)
     const noLoginMessage = 'Incorrect username or password'
 
     // if the user is not found in the db, return and sent a status of 400 with a message
     if(!foundUser) return res.status(400).json({ msg: noLoginMessage })
     
     // check the password from the req body against the password in the database
+    // console.log('PASSWORD???', req.body.password)
     const matchPasswords = await bcrypt.compare(req.body.password, foundUser.password)
+    console.log('MATCHPASSWORD',matchPasswords)
     
     // if provided password does not match, return an send a status of 400 with a message
     if(!matchPasswords) return res.status(400).json({ msg: noLoginMessage })
 
-    const hashedPassword = bcrypt.hash(req.body.newPassword, 12)
+    const hashedPassword = await bcrypt.hash(req.body.newPassword, 12)
     const options = { new : true }
     const editUser = await db.User.findByIdAndUpdate(req.params.id,{
       name: req.body.name,
       password: hashedPassword,
       email: req.body.email
     }, options)
+
+    console.log('EDITUSER', editUser)
+    // await db.User.save()
     // create jwt payload
     const payload = {
       name: editUser.name,
