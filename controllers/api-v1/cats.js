@@ -48,7 +48,7 @@ router.post('/new', async (req,res)=> {
         await foundUser.save()
         await newCat.save()
         // can chain redirect with status
-        res.status(201).json({ message: 'ye says hey' })
+        res.status(201).json({ message: 'ye says hey', catId: newCat._id })
     }catch(err){
         console.log(err)
         res.status(500).json({ message: 'Internal server error'})
