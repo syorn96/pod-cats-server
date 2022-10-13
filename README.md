@@ -16,7 +16,7 @@ to install all of the packages needed to run the app.
  ``` 
 
 * You're all set! run the command ```npm run start``` in your cloned repository and your client is ready to go.
-*
+* Make sure your server is running as well.
 * Enjoy!
 
 # Server Installation instructions
